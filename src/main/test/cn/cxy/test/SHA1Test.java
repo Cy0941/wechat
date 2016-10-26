@@ -1,3 +1,5 @@
+package cn.cxy.test;
+
 import cn.cxy.util.Sha1Utils;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;

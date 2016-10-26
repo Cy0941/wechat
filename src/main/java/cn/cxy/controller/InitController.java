@@ -66,7 +66,7 @@ public class InitController {
 //      微信服务器将用户发送的消息通过Post流的形式返回给request。当我们想要获取用户发送的消息时，可以通过request.getInputStream()获取。当然，我们可以根据文档上关于消息的返回的xml格式，进行必要的解析
         try {
             BufferedReader reader = new BufferedReader(new InputStreamReader(request.getInputStream()));
-            String str = null;
+            String str;
             while ((str = reader.readLine()) != null){
                 System.out.println(str);
             }

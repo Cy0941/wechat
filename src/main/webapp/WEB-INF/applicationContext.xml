@@ -9,12 +9,62 @@
                            http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
                            http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd-4.0">
 
+    <!--数据库配置信息-->
     <context:property-placeholder location="classpath*:jdbc.properties"/>
 
     <!--Spring不扫描 @Controller 注解-->
     <context:component-scan base-package="cn.cxy">
         <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
     </context:component-scan>
+
+    <!--
+        1、通过MethodInvokingJobDetailFactoryBean的targetObject与targetMethod属性指明具体执行的任务的位置
+        TODO 此处该类为继承 QuartzJobBean 或实现 Job
+    -->
+    <!--<bean id="jobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="refreshAccessTokenTask"/>
+        <property name="targetMethod" value="refreshAccessToken"/>
+    </bean>-->
+
+    <!--
+        TODO 此类继承自 QuartzJobBean 或实现 Job
+    -->
+    <bean id="trigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail">
+            <bean class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+                <property name="jobClass" value="cn.cxy.quartz.RefreshAccessTokenJob"/>
+            </bean>
+        </property>
+        <!--
+         TODO cron 表达式
+        -->
+        <property name="cronExpression">
+            <value>0/1 * * * * ? </value>
+        </property>
+    </bean>
+
+    <!--
+        声明触发器：
+            1、SimpleTriggerFactoryBean可以使用startDelay与repeatInterval声明执行周期
+            2、CronTriggerFactoryBean使用 cron 表达式
+    -->
+    <!--<bean id="trigger2" class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">
+        <property name="jobDetail" ref="jobDetail"/>
+        <property name="startDelay" value="0"/>
+        <property name="repeatInterval" value="2000"/>
+    </bean>-->
+
+    <!--
+        调度器进行调度执行
+    -->
+    <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="triggers">
+            <list>
+                <ref bean="trigger"/>
+                <!--<ref bean="trigger2"/>-->
+            </list>
+        </property>
+    </bean>
 
     <!--数据库连接池-->
     <bean class="org.apache.commons.dbcp.BasicDataSource" id="dataSource">
