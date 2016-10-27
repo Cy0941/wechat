@@ -7,7 +7,7 @@ public class InitConfig {
 
     public static final String TOKEN = "weixin";
 
-    public static final String APP_ID = "wx52d64cce4e0ebf02";
+    public static final String APP_ID = "wx9f770580838f3aa3";
 
-    public static final String APP_SECRET = "0927092d1e64719ebf5e0d81246507c2";
+    public static final String APP_SECRET = "be41dffeaa6ae0421419a7acf0513c8d";
 }

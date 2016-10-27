@@ -15,6 +15,8 @@ import org.quartz.JobExecutionException;
 import org.springframework.scheduling.quartz.QuartzJobBean;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created by lenovo on 2016/10/26.
@@ -22,7 +24,8 @@ import java.io.IOException;
 public class RefreshAccessTokenJob extends QuartzJobBean {
 
     protected void executeInternal(JobExecutionContext context) throws JobExecutionException {
-        System.out.println("-------开始获取普通Accesstoken-------");
+        String format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+        System.err.println("-------开始获取普通Accesstoken："+ format +"-------");
         try {
             CloseableHttpClient httpClient = HttpClients.createDefault();
             String uri = WeChatUrl.NORMAL_ACCESS_TOKEN_URL.replace("APPID", InitConfig.APP_ID).replace("APPSECRET",InitConfig.APP_SECRET);
