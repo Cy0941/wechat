@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServlet;
 public class InitServlet extends HttpServlet {
 
     private static WebApplicationContext context;
-    private static String realPaht;
+    private static String realPath;
 
     @Override
     public void init(ServletConfig config) throws ServletException {

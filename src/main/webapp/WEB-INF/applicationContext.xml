@@ -10,7 +10,7 @@
                            http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd-4.0">
 
     <!--数据库配置信息-->
-    <context:property-placeholder location="classpath*:jdbc.properties"/>
+    <context:property-placeholder location="classpath*:system.properties"/>
 
     <!--Spring不扫描 @Controller 注解-->
     <context:component-scan base-package="cn.cxy">

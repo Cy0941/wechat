@@ -1,8 +1,8 @@
 package cn.cxy.quartz;
 
 import cn.cxy.entity.AccessToken;
-import cn.cxy.util.JsonUtil;
-import cn.cxy.value.InitConfig;
+import cn.cxy.util.JsonUtils;
+import cn.cxy.util.PropUtils;
 import cn.cxy.value.WeChatUrl;
 import cn.cxy.value.WeixinContext;
 import org.apache.http.HttpEntity;
@@ -31,14 +31,14 @@ public class RefreshAccessTokenJob extends QuartzJobBean {
         CloseableHttpResponse response = null;
         try {
             httpClient = HttpClients.createDefault();
-            String uri = WeChatUrl.NORMAL_ACCESS_TOKEN_URL.replace("APPID", InitConfig.APP_ID).replace("APPSECRET",InitConfig.APP_SECRET);
+            String uri = WeChatUrl.NORMAL_ACCESS_TOKEN_URL.replace("APPID", PropUtils.getProperty("mp.app_id")).replace("APPSECRET",PropUtils.getProperty("mp.app_secret"));
             HttpGet httpGet = new HttpGet(uri);
             response = httpClient.execute(httpGet);
             int code = response.getStatusLine().getStatusCode();
             if (code == 200){
                 HttpEntity entity = response.getEntity();
                 String s = EntityUtils.toString(entity);
-                AccessToken accessToken = JsonUtil.deserialize(s, AccessToken.class);
+                AccessToken accessToken = JsonUtils.deserialize(s, AccessToken.class);
                 System.err.println(accessToken);
                 WeixinContext.setAccesstoken(accessToken.getAccess_token());
             }

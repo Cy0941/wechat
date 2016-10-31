@@ -10,7 +10,7 @@ import java.io.IOException;
 /**
  * Created by lenovo on 2016/10/26.
  */
-public class JsonUtil {
+public class JsonUtils {
 
     private static ObjectMapper mapper = new ObjectMapper();
 

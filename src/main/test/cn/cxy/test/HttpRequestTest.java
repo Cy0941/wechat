@@ -1,8 +1,7 @@
 package cn.cxy.test;
 
 import cn.cxy.entity.AccessToken;
-import cn.cxy.util.JsonUtil;
-import cn.cxy.value.InitConfig;
+import cn.cxy.util.JsonUtils;
 import cn.cxy.value.WeChatUrl;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -37,7 +36,7 @@ public class HttpRequestTest {
             if (code >= 200 && code < 300){
                 HttpEntity entity = response.getEntity();
                 String json = EntityUtils.toString(entity);
-                AccessToken accessToken = JsonUtil.deserialize(json, AccessToken.class);
+                AccessToken accessToken = JsonUtils.deserialize(json, AccessToken.class);
                 System.out.println(accessToken);
             }
         } catch (IOException e) {
