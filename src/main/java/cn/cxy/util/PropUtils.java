@@ -8,6 +8,7 @@ import java.util.Properties;
 /**
  * Created by lenovo on 2016/10/31.
  */
+@Deprecated
 public class PropUtils {
 
     private static Properties sysProperties;

@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 
 import java.io.IOException;
+import java.io.StringWriter;
 
 /**
  * Created by lenovo on 2016/10/26.
@@ -35,6 +36,21 @@ public class JsonUtils {
             e.printStackTrace();
         }
         return (T)object;
+    }
+
+    /**
+     * 对象序列化为JSON字符串
+     * @param object
+     * @return
+     */
+    public static String serialize(Object object){
+            StringWriter writer = new StringWriter();
+        try {
+            mapper.writeValue(writer,object);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return writer.toString();
     }
 
 }

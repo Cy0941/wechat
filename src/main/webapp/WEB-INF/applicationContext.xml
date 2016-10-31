@@ -14,7 +14,7 @@
 
     <!--Spring不扫描 @Controller 注解-->
     <context:component-scan base-package="cn.cxy">
-        <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
     </context:component-scan>
 
     <!--
@@ -57,14 +57,14 @@
     <!--
         调度器进行调度执行
     -->
-    <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+    <!--<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
         <property name="triggers">
             <list>
                 <ref bean="trigger"/>
-                <!--<ref bean="trigger2"/>-->
+                &lt;!&ndash;<ref bean="trigger2"/>&ndash;&gt;
             </list>
         </property>
-    </bean>
+    </bean>-->
 
     <!--数据库连接池-->
     <bean class="org.apache.commons.dbcp.BasicDataSource" id="dataSource">

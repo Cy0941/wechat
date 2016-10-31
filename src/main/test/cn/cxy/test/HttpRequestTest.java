@@ -2,6 +2,7 @@ package cn.cxy.test;
 
 import cn.cxy.entity.AccessToken;
 import cn.cxy.util.JsonUtils;
+import cn.cxy.value.Constants;
 import cn.cxy.value.WeChatUrl;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -28,7 +29,7 @@ public class HttpRequestTest {
     @Test
     public void getAccessToken(){
         try {
-            String uri = WeChatUrl.NORMAL_ACCESS_TOKEN_URL.replace("APPID", InitConfig.APP_ID).replace("APPSECRET",InitConfig.APP_SECRET);
+            String uri = WeChatUrl.NORMAL_ACCESS_TOKEN_URL.replace("APPID", Constants.APP_ID).replace("APPSECRET",Constants.APP_TOKEN);
             HttpClient client = HttpClients.createDefault();
             HttpGet httpGet = new HttpGet(uri);
             HttpResponse response = client.execute(httpGet);

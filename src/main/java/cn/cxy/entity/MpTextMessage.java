@@ -1,8 +1,12 @@
 package cn.cxy.entity;
 
+import lombok.Data;
+
 /**
  * Created by lenovo on 2016/10/25.
  */
+
+@Data
 public class MpTextMessage {
 
     /**

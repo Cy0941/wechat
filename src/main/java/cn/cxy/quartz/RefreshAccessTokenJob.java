@@ -4,7 +4,6 @@ import cn.cxy.entity.AccessToken;
 import cn.cxy.util.JsonUtils;
 import cn.cxy.util.PropUtils;
 import cn.cxy.value.WeChatUrl;
-import cn.cxy.value.WeixinContext;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -22,6 +21,8 @@ import java.util.Date;
 /**
  * Created by lenovo on 2016/10/26.
  */
+
+@Deprecated
 public class RefreshAccessTokenJob extends QuartzJobBean {
 
     protected void executeInternal(JobExecutionContext context) throws JobExecutionException {
@@ -40,7 +41,6 @@ public class RefreshAccessTokenJob extends QuartzJobBean {
                 String s = EntityUtils.toString(entity);
                 AccessToken accessToken = JsonUtils.deserialize(s, AccessToken.class);
                 System.err.println(accessToken);
-                WeixinContext.setAccesstoken(accessToken.getAccess_token());
             }
         } catch (IOException e) {
             e.printStackTrace();

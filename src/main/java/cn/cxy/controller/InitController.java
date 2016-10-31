@@ -1,7 +1,7 @@
 package cn.cxy.controller;
 
-import cn.cxy.util.PropUtils;
 import cn.cxy.util.Sha1Utils;
+import cn.cxy.value.Constants;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Arrays;
 
 /**
@@ -39,7 +41,7 @@ public class InitController {
         String echostr = request.getParameter("echostr");
         String nonce = request.getParameter("nonce");
         if (StringUtils.isNotBlank(echostr)){
-            String[] arr = {PropUtils.getProperty("mp.token"),timestamp,nonce};
+            String[] arr = {Constants.TOKEN,timestamp,nonce};
             Arrays.sort(arr);//字典排序
             StringBuilder sb = new StringBuilder();
             for (String str : arr){
@@ -50,6 +52,19 @@ public class InitController {
                 logger.info("----------"+sha1+"-----------");
                 response.getWriter().println(echostr);
             }
+        }
+    }
+
+    @RequestMapping(name = "init",method = RequestMethod.POST)
+    public void initPost(HttpServletRequest request,HttpServletResponse response){
+        try {
+            BufferedReader reader = new BufferedReader(new InputStreamReader(request.getInputStream()));
+            String read;
+            while ((read = reader.readLine()) != null){
+                System.err.println(read);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }
