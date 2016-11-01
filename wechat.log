@@ -498,3 +498,4 @@ WARN qtp1958814164-23 org.springframework.web.servlet.PageNotFound - No mapping 
 WARN qtp1958814164-22 org.springframework.web.servlet.PageNotFound - No mapping found for HTTP request with URI [/init/init.do] in DispatcherServlet with name 'dispatcher'
 WARN qtp1958814164-23 org.springframework.web.servlet.PageNotFound - No mapping found for HTTP request with URI [/initcontroller/init.do] in DispatcherServlet with name 'dispatcher'
 WARN qtp1036529258-19 org.springframework.web.servlet.PageNotFound - Request method 'POST' not supported
+WARN qtp1478683866-21 org.springframework.web.servlet.PageNotFound - Request method 'GET' not supported

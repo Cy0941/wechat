@@ -1,5 +1,6 @@
 package cn.cxy.controller;
 
+import cn.cxy.util.MsgUtils;
 import cn.cxy.util.Sha1Utils;
 import cn.cxy.value.Constants;
 import org.apache.commons.lang3.StringUtils;
@@ -14,6 +15,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Arrays;
+import java.util.Map;
 
 /**
  * Created by lenovo on 2016/10/19.
@@ -55,14 +57,20 @@ public class InitController {
         }
     }
 
+    /**
+     * 微信默认处理消息
+     * @param request
+     * @param response
+     */
     @RequestMapping(name = "init",method = RequestMethod.POST)
     public void initPost(HttpServletRequest request,HttpServletResponse response){
         try {
-            BufferedReader reader = new BufferedReader(new InputStreamReader(request.getInputStream()));
-            String read;
-            while ((read = reader.readLine()) != null){
-                System.err.println(read);
-            }
+            Map<String, String> map = MsgUtils.req2Map(request);
+            String s = MsgUtils.msgHandle(map);
+            //TODO 请求头部信息
+            response.setContentType("application/xml;charset=UTF-8");
+            response.setCharacterEncoding("UTF-8");
+            response.getWriter().write(s);
         } catch (IOException e) {
             e.printStackTrace();
         }

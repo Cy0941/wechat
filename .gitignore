@@ -14,7 +14,6 @@
 hs_err_pid*
 
 /wechat.iml
-.gitignore
 .idea/
 src/main/java/cn/cxy/service/
 src/main/webapp/WEB-INF/jsp/
