@@ -5,6 +5,7 @@ import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
+import org.dom4j.io.XMLWriter;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.BufferedReader;
@@ -36,13 +37,17 @@ public class MsgUtils {
         xmlMap.put("ToUserName",msgMap.get("FromUserName"));
         xmlMap.put("FromUserName",msgMap.get("ToUserName"));
         xmlMap.put("CreateTime",new Date().getTime()+"");
-        xmlMap.put("MsgType",WeChatMsgTypes.MSG_TEXT);
         String defaultMsg = "暂不支持此消息回复！";
         String s = msgMap.get("Content");
         if (WeChatMsgTypes.MSG_TEXT.equals(msgMap.get("MsgType")) && defaultMsgs.containsKey(s)){
-            defaultMsg = defaultMsgs.get(s);
+            xmlMap.put("MsgType",WeChatMsgTypes.MSG_TEXT);
+            defaultMsg = defaultMsgs.get(s) == null ? defaultMsg : defaultMsgs.get(s);
+            xmlMap.put("Content",defaultMsg);
+        }else if (WeChatMsgTypes.MSG_IAMGE.equals(msgMap.get("MsgType"))){
+            xmlMap.put("MsgType",WeChatMsgTypes.MSG_IAMGE);
+            defaultMsg = "<MediaId>ovHyNqiKNU43udNUj6W9iCGT5YvxrXGS19UycNnn1Cdbb4SL36cqrsZo_PeQo-84</MediaId>";
+            xmlMap.put("Image",defaultMsg);
         }
-        xmlMap.put("Content",defaultMsg);
         return map2Xml(xmlMap);
     }
 
@@ -59,7 +64,11 @@ public class MsgUtils {
             root.addElement(k).addText(map.get(k));
         }
         StringWriter writer = new StringWriter();
-        document.write(writer);
+        XMLWriter xw = new XMLWriter(writer);
+        xw.setEscapeText(false);//TODO 防止生成xml是转换 < 与 >
+        xw.write(document);
+//        document.write(writer);
+        System.err.println(writer.toString());
         return writer.toString();
     }
 

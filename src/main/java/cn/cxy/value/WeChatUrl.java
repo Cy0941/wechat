@@ -14,4 +14,9 @@ public class WeChatUrl {
      */
     public static String MENU_ADD = "https://api.weixin.qq.com/cgi-bin/menu/create?access_token=ACCESS_TOKEN";
 
+    /**
+     * 图片临时上传地址
+     */
+    public static String POST_IMAGE = "https://api.weixin.qq.com/cgi-bin/media/upload?access_token=ACCESS_TOKEN&type=TYPE";
+
 }

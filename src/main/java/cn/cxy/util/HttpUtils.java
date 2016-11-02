@@ -1,4 +1,4 @@
-package cn.cxy.value;
+package cn.cxy.util;
 
 import cn.cxy.entity.AccessToken;
 import cn.cxy.util.JsonUtils;

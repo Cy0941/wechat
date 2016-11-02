@@ -1,10 +1,8 @@
 package cn.cxy.thread;
 
 import cn.cxy.entity.AccessToken;
-import cn.cxy.util.PropUtils;
-import cn.cxy.value.HttpUtils;
+import cn.cxy.util.HttpUtils;
 import cn.cxy.value.WeChatUrl;
-import org.apache.log4j.Logger;
 
 /**
  * Created by lenovo on 2016/10/31.
