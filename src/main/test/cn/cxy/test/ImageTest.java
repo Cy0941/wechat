@@ -1,6 +1,6 @@
 package cn.cxy.test;
 
-import cn.cxy.util.ImageUtils;
+import cn.cxy.util.MsgUtils;
 import cn.cxy.value.WeChatMsgTypes;
 import org.junit.Test;
 
@@ -11,6 +11,6 @@ public class ImageTest {
 
     @Test
     public void postImage(){
-        ImageUtils.handleImage("C:\\Users\\lenovo\\Pictures\\Saved Pictures\\thinkpad.jpg", WeChatMsgTypes.MSG_IAMGE);
+        MsgUtils.handleImage("C:\\Users\\lenovo\\Pictures\\Saved Pictures\\thinkpad.jpg", WeChatMsgTypes.MSG_IAMGE);
     }
 }

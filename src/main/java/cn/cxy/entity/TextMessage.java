@@ -7,7 +7,7 @@ import lombok.Data;
  */
 
 @Data
-public class MpTextMessage {
+public class TextMessage {
 
     /**
      * 接收方账号（收的的OpenID）

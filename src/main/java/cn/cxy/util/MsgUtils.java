@@ -1,6 +1,20 @@
 package cn.cxy.util;
 
+import cn.cxy.entity.InstantImage;
+import cn.cxy.entity.TemplateMsg;
+import cn.cxy.value.Constants;
 import cn.cxy.value.WeChatMsgTypes;
+import cn.cxy.value.WeChatUrl;
+import org.apache.http.HttpEntity;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.ContentType;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.entity.mime.MultipartEntityBuilder;
+import org.apache.http.entity.mime.content.FileBody;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.util.EntityUtils;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.DocumentHelper;
@@ -8,10 +22,7 @@ import org.dom4j.Element;
 import org.dom4j.io.XMLWriter;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.StringWriter;
+import java.io.*;
 import java.util.*;
 
 /**
@@ -27,6 +38,51 @@ public class MsgUtils {
         defaultMsgs.put("你好","你好吗");
     }
 
+
+    /**
+     * post发送模板消息
+     * @return
+     */
+    public static String postTemplateMsg(TemplateMsg msg){
+        CloseableHttpResponse response = null;
+        CloseableHttpClient client = null;
+        try {
+            client = HttpClients.createDefault();
+            String url = WeChatUrl.POST_TEMPLATE.replace("ACCESS_TOKEN",Constants.INSTANT_ACCESS_TOKEN);
+            HttpPost httpPost = new HttpPost(url);
+            String json = JsonUtils.serialize(msg);
+            StringEntity stringEntity = new StringEntity(json, ContentType.create("application/json","utf-8"));
+            httpPost.setHeader("Content-Type","application/json");
+            httpPost.setEntity(stringEntity);
+            response = client.execute(httpPost);
+            int code = response.getStatusLine().getStatusCode();
+            if (code == 200){
+                HttpEntity entity = response.getEntity();
+                String s = EntityUtils.toString(entity);
+                System.err.println(s);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }finally {
+            try {
+                if (response != null){
+                    response.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            try {
+                if (client != null){
+                    client.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
+
+
     /**
      * 将需要回复的xml消息组装为map集合
      * @param msgMap
@@ -39,9 +95,11 @@ public class MsgUtils {
         xmlMap.put("CreateTime",new Date().getTime()+"");
         String defaultMsg = "暂不支持此消息回复！";
         String s = msgMap.get("Content");
-        if (WeChatMsgTypes.MSG_TEXT.equals(msgMap.get("MsgType")) && defaultMsgs.containsKey(s)){
+        if (WeChatMsgTypes.MSG_TEXT.equals(msgMap.get("MsgType"))){
+            if (defaultMsgs.containsKey(s)){
+                defaultMsg = defaultMsgs.get(s);
+            }
             xmlMap.put("MsgType",WeChatMsgTypes.MSG_TEXT);
-            defaultMsg = defaultMsgs.get(s) == null ? defaultMsg : defaultMsgs.get(s);
             xmlMap.put("Content",defaultMsg);
         }else if (WeChatMsgTypes.MSG_IAMGE.equals(msgMap.get("MsgType"))){
             xmlMap.put("MsgType",WeChatMsgTypes.MSG_IAMGE);
@@ -95,6 +153,52 @@ public class MsgUtils {
             e.printStackTrace();
         }
         return result;
+    }
+
+    /**
+     * post上传图片临时文件获得media_id
+     * @param path
+     * @param type
+     */
+    public static void handleImage(String path,String type){
+        CloseableHttpClient client = null;
+        CloseableHttpResponse response = null;
+        try {
+            client = HttpClients.createDefault();
+            String url = WeChatUrl.POST_IMAGE.replace("ACCESS_TOKEN", Constants.INSTANT_ACCESS_TOKEN).replace("TYPE", type);
+            HttpPost httpPost = new HttpPost(url);
+            //TODO POST表单处理待上传的文件信息
+            FileBody fileBody = new FileBody(new File(path));
+            HttpEntity httpEntity = MultipartEntityBuilder.create().addPart("media", fileBody).build();
+            httpPost.setEntity(httpEntity);
+
+            response = client.execute(httpPost);
+            int code = response.getStatusLine().getStatusCode();
+            if (200 == code){
+                HttpEntity entity = response.getEntity();
+                String s = EntityUtils.toString(entity);
+                InstantImage image = JsonUtils.deserialize(s, InstantImage.class);
+                System.err.println(image);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }finally {
+            try {
+                if (client != null){
+                    client.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            try {
+                if (response != null){
+                    response.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
     }
 
     private static String xml2String(HttpServletRequest request) throws IOException {
