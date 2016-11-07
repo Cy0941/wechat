@@ -18,7 +18,7 @@ public class AccessTokenThread implements Runnable{
         while (true){
             try {
                 String fullUrl = WeChatUrl.NORMAL_ACCESS_TOKEN_URL.replace("APPID",app_id).replace("APPSECRET",app_secret);
-                access_token = HttpUtils.httpGet(fullUrl);
+                access_token = HttpUtils.getAccessToken(fullUrl);
                 if (null != access_token){
                     System.err.println("获取到的token为："+access_token.getAccess_token());
                     //获取到accessToken后线程休眠7000秒

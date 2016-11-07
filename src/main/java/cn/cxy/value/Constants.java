@@ -9,5 +9,5 @@ public class Constants {
     public static final String APP_TOKEN = "ab1cc88dcc3dfb6494659d13afbaa44e";
     public static final String TOKEN = "weixin";
 
-    public static final String INSTANT_ACCESS_TOKEN = "iS_iDTfCOHk4PMV3GGlR9xNLFERcNhRHXi_tQUvVEfhP_EekNZ-Yef9Q7rExMHmHYWftpQUhAUIovk-mUrHNDimoom4a6_DVSbnrlHSJfPg-UtwrKfGu5RNQR_5EKQElOZWcACAWHE";
+    public static final String INSTANT_ACCESS_TOKEN = "abf50CftRxSurLdRxZqVb5IFEaplxfTXSg6r20Rx7YXUv6idO34Q_4vq2rdIOkU3qSq4LK5XKVFDZ26DHA6IEwSl4Ka5jjLnDSuZXs8GxFWUU6w21GZErhL8hjSRzE0bHKDjAIAYBU";
 }
