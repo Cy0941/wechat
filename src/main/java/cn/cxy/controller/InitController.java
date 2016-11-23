@@ -68,7 +68,6 @@ public class InitController {
             Map<String, String> map = MsgUtils.req2Map(request);
             String s = MsgUtils.msgHandle(map);
             //TODO 请求头部信息
-            //使用merge tools 解决冲突
             //how to use the eclipse's egit - merge tools
             response.setContentType("application/xml;charset=UTF-8");
             response.setCharacterEncoding("UTF-8");
