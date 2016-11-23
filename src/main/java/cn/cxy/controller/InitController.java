@@ -69,7 +69,7 @@ public class InitController {
             String s = MsgUtils.msgHandle(map);
             //TODO 请求头部信息
             //how to use the eclipse's egit - merge tools ;it'too hard to use it well
-            //keep going
+            //keep going dsjhfnialjfhn
             response.setContentType("application/xml;charset=UTF-8");
             response.setCharacterEncoding("UTF-8");
             response.getWriter().write(s);
