@@ -69,6 +69,7 @@ public class InitController {
             String s = MsgUtils.msgHandle(map);
             //TODO 请求头部信息
             //测试消息
+            //冲突消息
             response.setContentType("application/xml;charset=UTF-8");
             response.setCharacterEncoding("UTF-8");
             response.getWriter().write(s);
