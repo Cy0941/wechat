@@ -21,3 +21,5 @@ src/main/webapp/WEB-INF/static/
 target/
 wechat.iml
 /wechat.log
+/.classpath
+/.project
